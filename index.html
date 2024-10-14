@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist com Controles</title>
+</head>
+<body>
+    <h1>Playlist</h1>
+
+    <audio id="player" controls autoplay>
+        <source src="audio1.mp3" type="audio/mp3">
+        <p>Seu navegador não tem suporte à tag de áudio</p>
+    </audio>
+    <br>
+
+    <!-- Botões de controle -->
+    <button id="prev">Anterior</button>
+    <button id="next">Próxima</button>
+
+    <script>
+        // Lista de músicas
+        const playlist = ["audio1.mp3", "audio2.mp3", "audio3.mp3"];
+        let currentTrack = 0;
+
+        // Referência ao player de áudio
+        const player = document.getElementById('player');
+
+        // Função para carregar a música atual
+        function loadTrack(trackIndex) {
+            if (trackIndex >= 0 && trackIndex < playlist.length) {
+                player.src = playlist[trackIndex];
+                player.play();
+            }
+        }
+
+        // Quando a música terminar, tocar a próxima automaticamente
+        player.onended = function() {
+            nextTrack();
+        };
+
+        // Função para ir para a próxima música
+        function nextTrack() {
+            currentTrack++;
+            if (currentTrack >= playlist.length) {
+                currentTrack = 0; // Volta para a primeira música
+            }
+            loadTrack(currentTrack);
+        }
+
+        // Função para ir para a música anterior
+        function prevTrack() {
+            currentTrack--;
+            if (currentTrack < 0) {
+                currentTrack = playlist.length - 1; // Vai para a última música
+            }
+            loadTrack(currentTrack);
+        }
+
+        // Atribuindo as funções aos botões
+        document.getElementById('next').addEventListener('click', nextTrack);
+        document.getElementById('prev').addEventListener('click', prevTrack);
+    </script>
+</body>
+</html>
